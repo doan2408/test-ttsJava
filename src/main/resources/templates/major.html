@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý bộ môn / chuyên ngành</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h4>Quản lý bộ môn / chuyên ngành</h4>
+
+    <!-- Thông tin nhân viên -->
+    <div class="card p-3 mb-4">
+        <h5>Thông tin nhân viên</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Mã</label>
+                <input type="text" class="form-control" th:value="${s.staffCode}" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Tên</label>
+                <input type="text" class="form-control" th:value="${s.name}" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email FPT</label>
+                <input type="email" class="form-control" th:value="${s.accountFpt}" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email FE</label>
+                <input type="email" class="form-control" th:value="${s.accountFe}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách bộ môn / chuyên ngành -->
+    <div class="card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5>Danh sách bộ môn, chuyên ngành theo cơ sở</h5>
+            <a th:href="@{'/major/view-themMajor/'+${s.id}}" class="btn btn-dark">Thêm bộ môn chuyên ngành</a>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>Cơ sở</th>
+                <th>Bộ môn</th>
+                <th>Chuyên ngành</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="smf, stat : ${smf}">
+                <td th:text="${stat.index + 1}"></td>
+                <td th:text="${smf.facilityName}"></td>
+                <td th:text="${smf.departmentName}"></td>
+                <td th:text="${smf.majorName}"></td>
+<!--                <td>-->
+<!--                    <a th:href="@{/staff-major-facility/delete/{id}(id=${smf.id})}" class="btn btn-sm btn-danger">Xoá</a>-->
+<!--                </td>-->
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-danger mt-2">
+            <strong>*** Chú ý: Nhân viên chỉ có một bộ môn và một chuyên ngành trong một cơ sở ***</strong>
+        </div>
+    </div>
+</div>
+</body>
+</html>

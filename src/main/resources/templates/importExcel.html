@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Import Nhân Viên -->
+<div class="card">
+    <div class="card-header bg-light fw-semibold">Import nhân viên từ Excel</div>
+    <div class="card-body">
+        <form th:action="@{/staff/import}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input class="form-control" type="file" name="fileExcel" accept=".xlsx, .xls" required>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-file-earmark-arrow-up"></i> Import
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

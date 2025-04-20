@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add department major</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="card p-3 mb-4">
+        <h5>Them bo mon chuyen nganh co so</h5>
+        <form action="/major/themFacilityDepartmentMajor" method="post">
+            <div class="col-md-4 mb-3">
+                <input type="hidden" th:value="${idstaff}" name="staffId"> <!--id staff ẩn-->
+                    <label class="form-label">Co so</label>
+                    <select class="form-control" id="facilitySelect" name="facilityId">
+                        <option
+                                th:each="f : ${facilities}"
+                                th:value="${f.id}"
+                                th:text="${f.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">bo mon</label>
+                    <select class="form-control" id="departmentSelect" name="departmentId">
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">chuyen nganh</label>
+                    <select class="form-control" id="majorSelect" name="majorId">
+
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <!--                <a href="/major/major/infoStaff/" class="btn btn-secondary">Quay lại</a>-->
+                    <button type="submit" class="btn btn-success">Thêm mới</button>
+                </div>
+        </form>
+    </div>
+
+
+
+<script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (e) {
+        const facilityId = facilitySelect.value;
+        const departmentId = departmentSelect.value;
+        const majorId = majorSelect.value;
+
+        if (!facilityId || !departmentId || !majorId) {
+            e.preventDefault(); // Ngăn gửi form
+            alert("Vui lòng chọn đầy đủ Cơ sở, Bộ môn và Chuyên ngành.");
+        }
+    });
+
+
+    const facilitySelect = document.getElementById("facilitySelect");
+    const departmentSelect = document.getElementById("departmentSelect");
+    const majorSelect = document.getElementById("majorSelect");
+
+    facilitySelect.addEventListener("click", () => {
+        const facilityId = facilitySelect.value;
+        fetch(`/major/departments?facilityId=${facilityId}`)
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error("khong the tai du lieu")
+                }
+                else {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                departmentSelect.innerHTML = "";
+                majorSelect.innerHTML = "";
+                data.forEach(dep => {
+                    const opt = document.createElement("option");
+                    opt.value = dep.id;
+                    opt.text = dep.name;
+                    departmentSelect.add(opt);
+                });
+            });
+    });
+
+    departmentSelect.addEventListener("click", ()=> {
+        const facilityId = facilitySelect.value;
+        const departmentId = departmentSelect.value;
+        fetch(`/major/majors?facilityId=${facilityId}&departmentId=${departmentId}`)
+            .then(res => {
+                if(!res.ok) {
+                    throw new Error("loi khong tai duoc");
+                }
+                else {
+                    return res.json();
+                }
+            })
+            .then(data => {
+                majorSelect.innerHTML = "";
+                data.forEach(m => {
+                    const opt = document.createElement("option");
+                    opt.value = m.id;
+                    opt.text = m.name;
+                    majorSelect.add(opt);
+                })
+            })
+    })
+</script>
+
+</body>
+</html>

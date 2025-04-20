@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update nhân viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Sửa nhân viên</h2>
+    <form id="staffFrom" action="/staff/updateStaff" th:object="${staffListDto}" method="post" onsubmit="validateForm(event)">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label class="form-label">Mã nhân viên:</label>
+            <input type="text" class="form-control" th:field="*{staffCode}" name="staffCode" id="staffCode">
+            <span class="error" style="color: red"></span>
+            <span style="color:red" th:text="${staffCodeError}" ></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tên nhân viên:</label>
+            <input type="text" class="form-control" th:field="*{name}" name="name" id="name">
+            <span class="error" style="color: red"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email FPT:</label>
+            <input type="email" class="form-control" th:field="*{accountFpt}" name="accountFpt" id="accountFpt">
+            <span class="error" style="color: red"></span>
+            <span style="color:red" th:text="${accountFptError}" ></span>
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email FE:</label>
+            <input type="text" class="form-control" th:field="*{accountFe}" name="accountFe" id="accountFe">
+            <span class="error" style="color: red"></span>
+            <span style="color:red" th:text="${accountFeError}" ></span>
+
+        </div>
+
+        <input type="hidden" th:field="*{status}" name="status">
+
+        <div class="d-flex justify-content-between">
+            <a href="/staff/hien-thi" class="btn btn-secondary">Quay lại</a>
+            <button type="submit" class="btn btn-success">Update</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    async function validateForm(event) {
+
+        const staffCode = document.getElementById("staffCode")?.value.trim() || "";
+        const name = document.getElementById("name")?.value.trim() || "";
+        const accountFpt = document.getElementById("accountFpt")?.value.trim() || "";
+        const accountFe = document.getElementById("accountFe")?.value.trim() || "";
+        const errorSpans = document.querySelectorAll(".error");
+        const containsWhitespace = /\s/;
+        const containsUnicode = /[^\u0000-\u007F]/;
+
+        errorSpans.forEach(e => e.textContent = "");
+
+        let valid = true;
+
+        if (staffCode === "" || staffCode.length > 15) {
+            errorSpans[0].textContent = "Mã nhân viên không được để trống và nhỏ hơn 15 ký tự";
+            valid = false;
+        }
+
+        if (name === "" || name.length > 100) {
+            errorSpans[1].textContent = "Tên nhân viên không được để trống và dưới 100 ký tự";
+            valid = false;
+        }
+
+        if (accountFpt === "" || accountFpt.length > 100 || !accountFpt.endsWith("@fpt.edu.vn") || containsWhitespace.test(accountFpt) || containsUnicode.test(accountFpt)) {
+            errorSpans[2].textContent = "Email FPT phải kết thúc với @fpt.edu.vn, không có dấu cách, không chứa ký tự unicode và <100 ký tự";
+            valid = false;
+        }
+
+        if (accountFe === "" || accountFe.length > 100 || !accountFe.endsWith("@fe.edu.vn") || containsWhitespace.test(accountFe) || containsUnicode.test(accountFe)) {
+            errorSpans[3].textContent = "Email FE phải kết thúc với @fe.edu.vn, không có dấu cách, không chứa ký tự unicode và <100 ký tự";
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+            return;
+        }
+    }
+</script>
+
+</body>
+</html>
