@@ -57,9 +57,13 @@
                 <td th:text="${smf.facilityName}"></td>
                 <td th:text="${smf.departmentName}"></td>
                 <td th:text="${smf.majorName}"></td>
-<!--                <td>-->
-<!--                    <a th:href="@{/staff-major-facility/delete/{id}(id=${smf.id})}" class="btn btn-sm btn-danger">Xoá</a>-->
-<!--                </td>-->
+                <td>
+                    <a th:href="@{'/major/deleteMajor/' + ${smf.majorName} +
+                       '/' + ${smf.departmentName} +
+                       '/' + ${smf.facilityName} +
+                       '/' + ${s.id}
+                       }" class="btn btn-sm btn-danger" onclick="return confirm('Do you want to delete the major of this staff ?')">Xoá</a>
+                </td>
             </tr>
             </tbody>
         </table>

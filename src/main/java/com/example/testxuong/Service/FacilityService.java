@@ -37,4 +37,8 @@ public class FacilityService {
         return used.isEmpty() ? facilityRepository.findAll() : facilityRepository.findAvailableFacilities(used);
     }
 
+    public Facility getFacilityByName(String name) {
+        return facilityRepository.findByName(name);
+    }
+
 }

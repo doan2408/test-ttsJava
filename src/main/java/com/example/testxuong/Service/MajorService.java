@@ -36,5 +36,9 @@ public class MajorService {
         return majorFacilityRepository.findMajorsByFacilityIdAndDepartmentId(facilityId, departmentId);
     }
 
+    public Major getMajorByName(String name) {
+        return mRepository.findByName(name);
+    }
+
 
 }

@@ -44,5 +44,7 @@ public class DepartmentFacilityService {
         departmentFacilityRepository.save(departmentFacility);
     }
 
-    public void deleteDepartmentFacility() {}
+    public DepartmentFacility getDmfByFidAndDidAndSid(UUID fId, UUID dId, UUID sId) {
+        return departmentFacilityRepository.findByFacilityIdAndDepartmentIdAndStaffId(fId, dId, sId);
+    }
 }

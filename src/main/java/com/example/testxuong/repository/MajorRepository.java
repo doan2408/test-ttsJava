@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface MajorRepository extends JpaRepository<Major, UUID> {
+
+    Major findByName(String name);
 }

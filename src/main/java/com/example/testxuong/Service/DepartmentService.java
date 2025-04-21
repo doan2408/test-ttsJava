@@ -35,4 +35,8 @@ public class DepartmentService {
         return departmentFacilityRepository.findDepartmentByFacilityId(facilityId);
     }
 
+    public Department getDepartmentByName(String name) {
+        return departmentRepository.findByName(name);
+    }
+
 }

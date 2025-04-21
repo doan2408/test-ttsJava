@@ -15,6 +15,7 @@
                 <input type="hidden" th:value="${idstaff}" name="staffId"> <!--id staff ẩn-->
                     <label class="form-label">Co so</label>
                     <select class="form-control" id="facilitySelect" name="facilityId">
+                        <option value="">--Chọn cơ sở--</option>
                         <option
                                 th:each="f : ${facilities}"
                                 th:value="${f.id}"
@@ -25,12 +26,15 @@
                 <div class="col-md-4 mb-3">
                     <label class="form-label">bo mon</label>
                     <select class="form-control" id="departmentSelect" name="departmentId">
+                        <option value="">--Chọn bộ môn--</option>
+
                     </select>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label class="form-label">chuyen nganh</label>
                     <select class="form-control" id="majorSelect" name="majorId">
+                        <option value="">--Chọn chuyên ngành--</option>
 
                     </select>
                 </div>

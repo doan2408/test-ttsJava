@@ -1,5 +1,6 @@
 package com.example.testxuong.Service;
 
+import com.example.testxuong.entity.DepartmentFacility;
 import com.example.testxuong.entity.MajorFacility;
 import com.example.testxuong.repository.MajorFacilityRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,9 @@ public class MajorFacilityService {
 
     public void deleteMajorFacilityById(UUID id) {
         majorFacilityRepository.deleteById(id);
+    }
+
+    public MajorFacility getMajorFacilityByIdMajorAndIdDmf(UUID majorId, UUID dmfId) {
+        return majorFacilityRepository.getMajorFacilityByIdMajorAndIdDmf(majorId, dmfId);
     }
 }

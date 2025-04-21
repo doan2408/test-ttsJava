@@ -41,4 +41,7 @@ public interface StaffMajorFacilityRepository extends JpaRepository<StaffMajorFa
     boolean existsByStaffAndFacility(@Param("staffId") UUID staffId,
                                      @Param("facilityId") UUID facilityId);
 
+
+    StaffMajorFacility findByStaffIdAndMajorFacilityId(UUID staffId, UUID majorFacilityId);
+
 }

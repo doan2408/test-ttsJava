@@ -15,4 +15,6 @@ public interface FacilityRepository extends JpaRepository<Facility, UUID> {
     @Query("SELECT f FROM Facility f WHERE f.id NOT IN :excludedIds")
     List<Facility> findAvailableFacilities(@Param("excludedIds") List<UUID> excludedIds);
 
+    Facility findByName(String name);
+
 }

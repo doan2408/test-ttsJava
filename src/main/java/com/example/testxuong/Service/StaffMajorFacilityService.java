@@ -67,6 +67,7 @@ public class StaffMajorFacilityService {
         major.setId(majorId);
         majorFacility.setId(UUID.randomUUID());
         majorFacility.setMajor(major);
+        majorFacility.setStatus((short) 1);
         majorFacility.setDepartmentFacility(departmentFacility);
         majorFacilityRepository.save(majorFacility);
 
@@ -77,6 +78,12 @@ public class StaffMajorFacilityService {
         stf.setStaff(staff);
         staffMajorFacilityRepository.save(stf);
     }
+
+    public StaffMajorFacility getSmfBySidAndMfId(UUID staffId, UUID mfId) {
+        return staffMajorFacilityRepository.findByStaffIdAndMajorFacilityId(staffId, mfId);
+    }
+
+
 }
 
 

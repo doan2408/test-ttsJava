@@ -187,3 +187,21 @@ FROM staff_major_facility smf
 JOIN major_facility mf ON smf.id_major_facility = mf.id
 JOIN department_facility df ON mf.id_department_facility = df.id
 WHERE smf.id_staff = '550e8400-e29b-41d4-a716-446655440000'
+
+select * from major_facility
+
+
+select smf.id as 'id staff major facility' from staff_major_facility smf
+where smf.id_staff = '550E8400-E29B-41D4-A716-446655440002' and smf.id_major_facility = '550E8400-E29B-41D4-A716-446655440051' 
+
+
+select major.id from major where name = 'Major Three'
+
+select dmf.id from department_facility dmf where dmf.id_facility = '550E8400-E29B-41D4-A716-446655440010'
+and dmf.id_department = '550E8400-E29B-41D4-A716-446655440020'
+and dmf.id_staff = '550E8400-E29B-41D4-A716-446655440000'
+
+select * from staff
+select * from facility
+select * from major
+select * from department

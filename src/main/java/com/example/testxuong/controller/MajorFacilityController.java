@@ -26,12 +26,15 @@ public class MajorFacilityController {
     private final DepartmentService departmentService;
     private final StaffMajorFacilityService staffMajorFacilityService;
     private final StaffMajorFacilityRepository staffMajorFacilityRepository;
+    private final DepartmentFacilityService departmentFacilityService;
+    private final MajorFacilityService majorFacilityService;
 
     @GetMapping("/infoStaff/{id}")
     public String infoStaff(Model model, @PathVariable UUID id) {
         StaffDto staff = staffService.findStaffByIdDto(id);
         model.addAttribute("s", staff);
         model.addAttribute("smf", staffMajorFacilityRepository.getFacilityAndDepartmentAndMajorByStaffId(id));
+
         return "major";
     }
 
@@ -61,6 +64,35 @@ public class MajorFacilityController {
     public List<DepartmentDto> getDepartments(@RequestParam("facilityId") UUID facilityId) {
         List<Department> deps = departmentService.getDepartmentsByFacility(facilityId);
         return deps.stream().map(d -> new DepartmentDto(d.getId(), d.getName())).collect(Collectors.toList());
+    }
+
+
+    @GetMapping("/deleteMajor/{majorName}/{departmentName}/{facilityName}/{staffId}")
+    public String deleteMajor(@PathVariable("majorName") String mName,
+                              @PathVariable("departmentName") String dName,
+                              @PathVariable("facilityName") String fName,
+                              @PathVariable("staffId") UUID staffid
+    ) {
+        UUID idMajor = majorService.getMajorByName(mName).getId();
+        UUID idDepartment = departmentService.getDepartmentByName(dName).getId();
+        UUID idFacility = facilityService.getFacilityByName(fName).getId();
+        System.out.println("idFacility: "+ idFacility );
+
+        UUID idDepartmentFacility = departmentFacilityService.getDmfByFidAndDidAndSid(idFacility, idDepartment, staffid).getId();
+        System.out.println("idDepartmentFacility: " + idDepartmentFacility);
+
+        UUID idMajorFacility = majorFacilityService.getMajorFacilityByIdMajorAndIdDmf(idMajor, idDepartmentFacility).getId();
+
+        System.out.println("major facility: " +idMajorFacility);
+
+        UUID idStaffMajorFacility = staffMajorFacilityService.getSmfBySidAndMfId(staffid, idMajorFacility).getId();
+
+        staffMajorFacilityService.deleteStaffMajorFacilityById(idStaffMajorFacility);
+        majorFacilityService.deleteMajorFacilityById(idMajorFacility);
+        departmentFacilityService.delteDepartmentFacilities(idDepartmentFacility);
+
+        return "redirect:/major/infoStaff/" + staffid;
+
     }
 
 
@@ -97,7 +129,7 @@ public class MajorFacilityController {
 //        // Nếu chưa có, tiến hành thêm bộ môn chuyên ngành mới
 //        DepartmentFacility departmentFacility = new DepartmentFacility();
 //
-//        departmentFacilityRepository.save(departmentFacility); // Lưu thông tin mới
+//        departmentFacilityRepository.save(departmentFacility);
 //    }
 
 

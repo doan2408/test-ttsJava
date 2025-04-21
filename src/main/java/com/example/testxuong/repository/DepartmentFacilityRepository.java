@@ -19,7 +19,7 @@ public interface DepartmentFacilityRepository extends JpaRepository<DepartmentFa
     List<Department> findDepartmentByFacilityId(UUID facilityId);
 
 
-    DepartmentFacility findByFacilityIdAndDepartmentId(UUID facilityId, UUID departmentId);
+    DepartmentFacility findByFacilityIdAndDepartmentIdAndStaffId(UUID facilityId, UUID departmentId, UUID staffId);
 
 
 }
